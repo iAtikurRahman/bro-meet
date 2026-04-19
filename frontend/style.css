@@ -205,11 +205,20 @@ html, body {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
+}
+
+.page-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .page-info {
     font-size: 0.8rem;
     color: #999;
+    min-width: 40px;
+    text-align: center;
 }
 
 #meetingBody {
@@ -229,6 +238,8 @@ html, body {
     gap: 8px;
     padding: 8px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     background: #111;
 }
 
@@ -237,7 +248,7 @@ html, body {
     background: #1a1a2e;
     border-radius: 12px;
     overflow: hidden;
-    min-width: 280px;
+    min-width: 0;
     max-width: 640px;
     flex: 1 1 calc(33.33% - 16px);
     aspect-ratio: 4 / 3;
@@ -525,28 +536,98 @@ html, body {
 
 /* ─── Responsive ────────────────────────────────────────────────────────── */
 
-@media (max-width: 768px) {
+/* Tablet landscape – 2‑col grid */
+@media (max-width: 900px) {
     .video-tile {
-        min-width: 100%;
-        flex: 1 1 100%;
+        flex: 1 1 calc(50% - 12px);
+    }
+}
+
+/* Tablet portrait & wide phones */
+@media (max-width: 768px) {
+    #topBar {
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 8px 12px;
     }
 
-    #chatPanel { width: 100%; }
+    .top-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    #chatPanel {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #333;
+        top: auto;
+        height: 55vh;
+    }
 
     .ctrl-btn {
-        padding: 8px 12px;
-        font-size: 0.8rem;
+        padding: 10px 12px;
+        font-size: 0.82rem;
+        min-height: 44px;
     }
 
     #focusSidebar {
-        width: 120px;
+        width: 160px;
     }
 
     .sidebar-tile .avatar-large { width: 36px; height: 36px; }
     .sidebar-tile .avatar-initials { width: 36px; height: 36px; font-size: 1rem; }
+
+    .dash-card {
+        padding: 28px 20px;
+    }
+
+    .landing-card {
+        padding: 28px 20px;
+    }
 }
 
+/* Small phones – 1‑col grid, horizontally scrollable controls */
+@media (max-width: 540px) {
+    .video-tile {
+        flex: 1 1 100%;
+    }
+
+    #controls {
+        gap: 6px;
+        padding: 8px 6px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    #controls::-webkit-scrollbar { display: none; }
+
+    .ctrl-btn {
+        padding: 10px 10px;
+        font-size: 0.78rem;
+        flex-shrink: 0;
+        min-height: 44px;
+    }
+}
+
+/* Portrait phones */
 @media (max-width: 480px) {
+    #topBar {
+        padding: 6px 10px;
+    }
+
+    #topBar #roomInfo {
+        font-size: 0.78rem;
+    }
+
+    .btn-small {
+        padding: 5px 9px;
+        font-size: 0.78rem;
+    }
+
     #focusView {
         flex-direction: column;
     }
@@ -555,13 +636,70 @@ html, body {
         width: 100%;
         flex-direction: row;
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         border-left: none;
         border-top: 1px solid #222;
-        height: 120px;
+        height: 110px;
+        flex-shrink: 0;
+        padding: 6px;
+        gap: 6px;
     }
 
     .sidebar-tile {
-        min-width: 120px;
+        min-width: 110px;
         aspect-ratio: 4 / 3;
+        flex-shrink: 0;
+    }
+
+    .sidebar-tile .avatar-large { width: 36px; height: 36px; }
+    .sidebar-tile .avatar-initials { width: 36px; height: 36px; font-size: 1rem; }
+
+    .landing-card,
+    .dash-card {
+        padding: 24px 16px;
+        border-radius: 12px;
+    }
+
+    .landing-card h1 {
+        font-size: 1.6rem;
+    }
+
+    .join-row {
+        flex-direction: column;
+    }
+
+    .join-row .btn {
+        width: 100%;
+    }
+
+    #chatPanel {
+        height: 65vh;
+    }
+
+    #toastContainer {
+        top: auto;
+        bottom: 90px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .toast {
+        font-size: 0.82rem;
+        padding: 8px 14px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+    .ctrl-btn {
+        padding: 9px 8px;
+        font-size: 0.72rem;
+    }
+
+    #userName {
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }

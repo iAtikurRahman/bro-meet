@@ -1,9 +1,16 @@
 # Build stage
-FROM rust:1.78-slim AS builder
+FROM rust:1.85-slim AS builder
 WORKDIR /app
+
+# Cache dependencies separately from source
 COPY Cargo.toml ./
+RUN mkdir src && echo "fn main() {}" > src/main.rs \
+    && cargo build --release \
+    && rm -rf src
+
 COPY src ./src
-RUN cargo build --release
+# Touch main.rs so Cargo rebuilds the real binary
+RUN touch src/main.rs && cargo build --release
 
 # Runtime stage
 FROM debian:bookworm-slim
