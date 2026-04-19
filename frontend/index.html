@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bro Meet</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen">
+        <div class="landing-card">
+            <h1>&#128247; Bro Meet</h1>
+            <p>Lightweight video conferencing</p>
+            <div id="googleBtnWrap"></div>
+            <div id="loginError" class="error-msg hidden"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboard" class="screen hidden">
+        <nav class="topnav">
+            <span class="brand">&#128247; Bro Meet</span>
+            <div class="nav-user">
+                <img id="userAvatar" class="avatar-sm" alt="">
+                <span id="userName"></span>
+                <button id="logoutBtn" class="btn-small">Logout</button>
+            </div>
+        </nav>
+        <div class="dash-center">
+            <div class="dash-card">
+                <h2>Start or join a meeting</h2>
+                <button id="createBtn" class="btn btn-primary">+ New Meeting</button>
+                <div class="divider">or join existing</div>
+                <div class="join-row">
+                    <input type="text" id="roomInput" placeholder="Enter meeting code" maxlength="8" autocomplete="off">
+                    <button id="joinBtn" class="btn btn-secondary">Join</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

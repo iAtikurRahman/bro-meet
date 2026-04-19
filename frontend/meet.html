@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bro Meet - Meeting</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- Meeting Screen -->
+    <div id="meeting" class="screen">
+        <div id="topBar">
+            <span id="roomInfo"></span>
+            <div class="top-actions">
+                <button id="copyLink" class="btn-small" title="Copy invite link">&#128279; Copy Link</button>
+                <span id="pageInfo" class="page-info"></span>
+                <button id="prevPage" class="btn-small hidden" title="Previous participants">&#9664; Prev</button>
+                <button id="nextPage" class="btn-small hidden" title="Next participants">Next &#9654;</button>
+            </div>
+        </div>
+
+        <!-- Main content area: video + sidebar -->
+        <div id="meetingBody">
+            <!-- Normal grid view -->
+            <div id="videoGrid"></div>
+
+            <!-- Focus view (hidden by default) -->
+            <div id="focusView" class="hidden">
+                <div id="focusMain">
+                    <div id="focusTile" class="video-tile focus-tile"></div>
+                    <div id="focusControls">
+                        <button id="fullscreenBtn" class="btn-small">&#9974; Fullscreen</button>
+                        <button id="exitFocusBtn" class="btn-small">&#10005; Exit Focus</button>
+                    </div>
+                </div>
+                <div id="focusSidebar"></div>
+            </div>
+        </div>
+
+        <!-- Notification toast -->
+        <div id="toastContainer"></div>
+
+        <div id="controls">
+            <button id="micBtn" class="ctrl-btn" title="Toggle Microphone">&#127908; Mic</button>
+            <button id="camBtn" class="ctrl-btn" title="Toggle Camera">&#127909; Cam</button>
+            <button id="screenBtn" class="ctrl-btn" title="Share Screen">&#128187; Screen</button>
+            <button id="chatToggle" class="ctrl-btn" title="Toggle Chat">&#128172; Chat</button>
+            <button id="leaveBtn" class="ctrl-btn ctrl-leave" title="Leave Meeting">&#9888; Leave</button>
+        </div>
+
+        <!-- Chat Panel -->
+        <div id="chatPanel" class="hidden">
+            <div id="chatHeader">
+                <span>Chat</span>
+                <button id="chatClose" class="btn-small">&#10005;</button>
+            </div>
+            <div id="chatMessages"></div>
+            <div id="chatInput">
+                <input type="text" id="msgInput" placeholder="Type a message..." maxlength="500" autocomplete="off">
+                <button id="sendMsg" class="btn-small">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
