@@ -5,10 +5,16 @@ const WS_URL = location.protocol === "https:"
     ? `wss://${location.hostname}:8080/ws`
     : `ws://${location.hostname}:8080/ws`;
 
-const ICE_SERVERS = [
+let ICE_SERVERS = [
     { urls: "stun:stun.l.google.com:19302" },
     { urls: "stun:stun1.l.google.com:19302" },
 ];
+
+// Fetch ICE server config (including TURN) from backend
+fetch(`${API_BASE}/api/ice-servers`)
+    .then((r) => r.json())
+    .then((data) => { if (data.ice_servers) ICE_SERVERS = data.ice_servers; })
+    .catch(() => { /* keep defaults on error */ });
 
 const USERS_PER_PAGE = 6;
 

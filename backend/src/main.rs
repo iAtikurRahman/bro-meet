@@ -131,6 +131,20 @@ struct ErrorResponse {
     error: String,
 }
 
+#[derive(Serialize)]
+struct IceServerEntry {
+    urls: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    username: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    credential: Option<String>,
+}
+
+#[derive(Serialize)]
+struct IceServersResponse {
+    ice_servers: Vec<IceServerEntry>,
+}
+
 // ─── Main ────────────────────────────────────────────────────────────────────
 
 #[tokio::main]
@@ -143,6 +157,7 @@ async fn main() {
         .route("/api/auth/google", post(google_auth))
         .route("/api/auth/verify", get(verify_token))
         .route("/api/create-room", get(create_room))
+        .route("/api/ice-servers", get(ice_servers))
         .route("/ws", get(ws_handler))
         .layer(CorsLayer::permissive())
         .with_state(rooms);
@@ -298,6 +313,37 @@ fn decode_jwt(token: &str) -> Result<Claims, (StatusCode, Json<ErrorResponse>)> 
     })?;
 
     Ok(data.claims)
+}
+
+// ─── ICE Servers Handler ─────────────────────────────────────────────────────
+
+async fn ice_servers() -> Json<IceServersResponse> {
+    let mut servers = vec![
+        IceServerEntry {
+            urls: "stun:stun.l.google.com:19302".into(),
+            username: None,
+            credential: None,
+        },
+        IceServerEntry {
+            urls: "stun:stun1.l.google.com:19302".into(),
+            username: None,
+            credential: None,
+        },
+    ];
+
+    if let (Ok(url), Ok(user), Ok(pass)) = (
+        std::env::var("TURN_SERVER_URL"),
+        std::env::var("TURN_USERNAME"),
+        std::env::var("TURN_PASSWORD"),
+    ) {
+        servers.push(IceServerEntry {
+            urls: format!("turn:{}", url),
+            username: Some(user),
+            credential: Some(pass),
+        });
+    }
+
+    Json(IceServersResponse { ice_servers: servers })
 }
 
 // ─── Room Handler ────────────────────────────────────────────────────────────
